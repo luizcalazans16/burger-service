@@ -1,13 +1,21 @@
 package br.com.dimed.hamburgueria;
 
+import br.com.dimed.hamburgueria.exceptions.BusinessException;
 import br.com.dimed.hamburgueria.model.Burger;
 import br.com.dimed.hamburgueria.model.Ingredient;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@SpringBootApplication
 public class BurgerServiceApplication {
 
     public static void main(String[] args) {
+
+       // SpringApplication.run(BurgerServiceApplication.class, args);
 
         Burger burger1 = new Burger();
         burger1.setName("AC/DC");
@@ -25,6 +33,7 @@ public class BurgerServiceApplication {
         System.out.println("========================================================");
 
         Burger burger2 = new Burger();
+        System.out.println(burger2);
         burger2.setName("Metallica");
         burger2.addIngredient("Pão", new Ingredient(3, 1.35));
         burger2.addIngredient("Queijo Cheddar", new Ingredient(4, 1.5));
@@ -38,6 +47,20 @@ public class BurgerServiceApplication {
         burger2.calculateIngredientPercentage("Hambúrguer 180g");
         burger2.calculateIngredientPercentage("Bacon");
 
-    }
+        System.out.println("========================================================");
 
+        Burger burger3 = new Burger();
+        burger3.setName("Guns");
+
+
+        try {
+            burger3.calculateBurgerPrice();
+            burger3.showFinalDescription(burger3.getName(), burger3.getBurgerPrice());
+            burger3.calculateIngredientPercentage("Pão");
+            burger3.calculateIngredientPercentage("Maionese");
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
 }
+
